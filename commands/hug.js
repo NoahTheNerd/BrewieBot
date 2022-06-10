@@ -4,8 +4,8 @@ module.exports = {
     options: [
       {
         type: "user",
-        name: "user",
-        description: "The user you would like to hug",
+        name: "member",
+        description: "The member to hug",
         required: true
       }
     ],
