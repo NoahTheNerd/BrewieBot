@@ -10,6 +10,6 @@ module.exports = {
       }
     ],
     run: (interaction) => {
-      interaction.reply(`${interaction.member.username} hugs ${interaction.options.getUser('user').username}`)
+      interaction.reply(`${interaction.member.displayName} hugs ${interaction.options.getUser('user').username}`)
     }
 }
