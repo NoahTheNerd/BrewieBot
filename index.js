@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const private = require("./private.json")
 const config = require("./config.json")
 const Discord = require('discord.js')
+const u = require('./util')
 const { REST } = require('@discordjs/rest') 
 const { Routes } = require('discord-api-types/v9');
 const fs = require('fs')
@@ -16,9 +17,16 @@ const commands_b = []
 for (const file of commandsdir) {
     const command = require(`./commands/${file}`)
     commands[command.name] = command;
-    commands_b.push(new SlashCommandBuilder()
+    let slashcmd = new SlashCommandBuilder()
     .setName(command.name)
-    .setDescription(command.description))
+    .setDescription(command.description)
+
+    command.options.forEach(option => {
+        slashcmd[`add${u.capital(option.type)}Option`](x => x.setName(option.name).setDescription(option.description).setRequired(option.required))
+        // This line of code is my 13th reason
+    })
+
+    commands_b.push(slashcmd)
 }
 commands_b.map(command => command.toJSON());
 rest.put(Routes.applicationGuildCommands(config.clientId, config.guildId), { body: commands_b })
