@@ -1,8 +1,78 @@
-module.exports.random = (min, max) => {
+const { MessageActionRow } = require("discord.js");
+
+let m = module.exports
+
+
+// Random number with min & max (Max is cap, cannot be reached)
+m.random = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min);
 }
-module.exports.capital = (string) => {
+
+// Capitalize first letter
+m.capitalize = (string) => {
     return string[0].toUpperCase()+string.substring(1)
 }
+
+// timestamp to string
+m.time = function(ms, decimals=0, hideS, shortTime) {
+    function timeStr(amount, str) { 
+        amount = +amount
+        return `${amount} ${str}${amount == 1 ? "" : "s"}`
+    }
+    ms = Math.abs(ms)
+    let seconds = (ms / 1000).toFixed(0)
+    let minutes = (ms / (1000 * 60)).toFixed(decimals)
+    let hours = (ms / (1000 * 60 * 60)).toFixed(decimals)
+    let days = (ms / (1000 * 60 * 60 * 24)).toFixed(decimals)
+    if ( seconds < 1 ) return timeStr((ms / 1000).toFixed(2), shortTime ? "sec" : "second")
+    if ( seconds < 60 ) return timeStr(seconds, shortTime ? "sec" : "second")
+    else if ( minutes < 60 ) return timeStr(minutes, shortTime ? "min" : "minute")
+    else if (hours <= 24) return timeStr(hours, "hour")
+    else return timeStr(days, "day")
+}
+
+// timestamp to h:m:s
+m.timestamp = (ms, useTimeIfLong) => {
+    if (useTimeIfLong && ms >= 86399000) return this.time(ms, 1)
+    let secs = Math.ceil(Math.abs(ms) / 1000)
+    if (secs < 0) secs = 0
+    let days = Math.floor(secs / 86400)
+    if (days) secs -= days * 86400
+    let timestamp = `${ms < 0 ? "-" : ""}${days ? `${days}d + ` : ""}${[Math.floor(+secs / 3600), Math.floor(+secs / 60) % 60, +secs % 60].map(v => v < 10 ? "0" + v : v).filter((v,i) => v !== "00" || i > 0).join(":")}`
+    if (timestamp.length > 5) timestamp = timestamp.replace(/^0+/, "")
+    return timestamp
+}
+
+// Bob's Bakery 
+// Lucas' Bakery
+m.addS = (string) => {
+    if (string.endsWith('s')) return `'`; else return `'s`
+}
+
+// example options { labels, timeoutMessage, onClick, onTimeout, styles }
+/*m.makeConfirmButtons = (options={}, interaction) => {
+    let row = new Discord.MessageActionRow()
+    .addComponents(
+        new MessageButton()
+        .setCustomId('confirm')
+        .setLabel( options.labels!==undefined ? options.labels[0] : 'Confirm' )
+        .setStyle( options.styles!==undefined ? options.styles[0] : 'SUCCESS' ),
+        new MessageButton()
+        .setCustomId('cancel')
+        .setLabel( options.labels!==undefined ? options.labels[1] : 'Cancel' )
+        .setStyle( options.styles!==undefined ? options.styles[1] : 'DANGER' )
+    )
+    let filter = i => i.customId === 'confirm' || i.customId === 'cancel'
+    let collector = interaction.channel.createMessageComponentCollector({ filter, time: 15000 })
+    collector.on('collect', async i => {
+        switch (i.customId) {
+            case 'confirm':
+            break;
+
+            case 'cancel':
+            break;
+        }
+    })
+}*/

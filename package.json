@@ -1,6 +1,26 @@
 {
+  "name": "brewiebot",
+  "version": "1.0.0",
+  "description": "A discord bot for The Space Café.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NoahTheNerd/BrewieBot.git"
+  },
+  "keywords": [
+    "discord",
+    "bot"
+  ],
+  "author": "ixNoah",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/NoahTheNerd/BrewieBot/issues"
+  },
+  "homepage": "https://github.com/NoahTheNerd/BrewieBot#readme",
   "dependencies": {
-    "@discordjs/rest": "^0.5.0",
     "discord.js": "^13.8.0"
   }
 }

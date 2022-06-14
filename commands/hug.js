@@ -10,6 +10,6 @@ module.exports = {
       }
     ],
     run: (interaction) => {
-      interaction.reply(`**<:blobheart:984742973076021258> ${interaction.user.username}** hugs **${interaction.options.getUser('user').username}**`)
+      interaction.reply(`**<:blobheart:984742973076021258> ${interaction.user.username}** hugs **${interaction.options.getUser('member').username}**`)
     }
 }

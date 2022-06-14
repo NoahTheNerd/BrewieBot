@@ -17,10 +17,16 @@ module.exports = {
         name: "reason",
         description: "The reason you are reporting them",
         required: true
+      },
+      {
+        type: "string",
+        name: "proof",
+        description: "Evidence to prove your report",
+        required: false
       }
     ],
     run: (interaction) => {
-        let embed = new MessageEmbed().setTitle(`Report from: ${interaction.user.tag}`).setColor('RED').addField('User',`<@${interaction.options.getUser('member').id}>`).addField('Reason',interaction.options.getString('reason'))
+        let embed = new MessageEmbed().setTitle(`Report from: ${interaction.user.tag}`).setColor('RED').addField('User',`<@${interaction.options.getUser('member').id}>`).addField('Reason',interaction.options.getString('reason')).addField('Evidence',typeof interaction.options.getString('proof') !== undefined ? interaction.options.getString('proof') : 'None')
         console.log(embed)
         webhookClient.send({
             embeds: [embed]
